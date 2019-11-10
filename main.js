@@ -17,13 +17,16 @@ function control() {
         case 2:
             deleteTodo();
             break;
+        case 3:
+            editTodo();
+            break;
     }
 }
 
 // ------------ start panel
 function start() {
     logTodos()
-    action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action\n1 to add a new todo\n2 to delete a todo'), 10);
+    action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action\n1 to add a new todo\n2 to delete a todo\n3 to edit a todo'), 10);
     control();
 }
 
@@ -50,19 +53,27 @@ function deleteTodo() {
         alert('Your todolist is empty')
         start();
     } else {
-        let deleteTodo = prompt(`Enter the number of the todo you want to delete\n ${printTodos}`)
+        let deleteIndex = prompt(`Enter the number of the todo you want to delete\n ${printTodos}`)
 
-        if(deleteTodo > 0 && deleteTodo <= todos.length) {
-            todos.splice(-1, 1);
+        if(deleteIndex > 0 && deleteIndex <= todos.length) {
+            todos.splice(deleteIndex-1, 1);
             logTodos();
         } else {
-            alert (`Todo item number ${deleteTodo} doesn't exist`)
+            alert (`Todo item number ${deleteIndex} doesn't exist`)
         }
+
+        confirm('Delete more?') ? deleteTodo() : start();
     }
-    
-    confirm('Delete more?') ? deleteTodo() : start();
 }
 
+// ------------ edit todo
+function editTodo() {
+    let editIndex = prompt(`Enter the number of the todo you want to edit\n ${printTodos}`)-1;
+
+    todos[editIndex] = prompt(`Write the new version of this task"\n${todos[editIndex]}`);
+    
+    confirm('Edit more?') ? editTodo() : start();
+}
 
 
 
