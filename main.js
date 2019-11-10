@@ -10,6 +10,15 @@ function start() {
     control();
 }
 
+// ------------ log todos
+function logTodos() {
+    let printTodos = [];
+    for(let i = 1; i <= todos.length; i++) {
+        printTodos.push(`\n${i}. ${todos[i-1]}`);
+    }
+    console.log(`Your todos: ${printTodos}`);
+}
+
 //------------control the app
 function control() {
     switch (action) {
@@ -26,9 +35,9 @@ function control() {
 function addTodo() {
     const newTodo = prompt("Add new todo");
     todos.push(newTodo);
+    logTodos();
     let next = confirm('Continue') ? addTodo() : start();
 }
-
 
 
 
