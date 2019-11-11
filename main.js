@@ -1,9 +1,32 @@
  
-const todos = [];
 let action = 0;
 let printTodos = [];
 
 control();
+
+class Todo {
+    constructor(title) {
+        this.title = title,
+        this.done = false
+    }
+}
+
+class TodoList {
+    constructor() {
+        const todos = []
+    }
+
+    addTodo() {
+        const newTitle = prompt("Add new todo");
+        const newTodo = new Todo(newTitle);
+        this.todos.push(newTodo);
+        logTodos();
+        confirm('Add more?') ? addTodo() : start();
+    }
+}
+
+// let cokolwiek = new Todo('Cokolwiek')
+// console.log(cokolwiek)
 
 //------------ control the app
 function control() {
@@ -40,12 +63,13 @@ function logTodos() {
 }
 
 // ------------ add new todo
-function addTodo() {
-    const newTodo = prompt("Add new todo");
-    todos.push(newTodo);
-    logTodos();
-    confirm('Add more?') ? addTodo() : start();
-}
+// function addTodo() {
+//     const newTitle = prompt("Add new todo");
+//     const newTodo = new Todo(newTitle);
+//     todos.push(newTodo);
+//     logTodos();
+//     confirm('Add more?') ? addTodo() : start();
+// }
 
 // ------------ delete todo
 function deleteTodo() {
