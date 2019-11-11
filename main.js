@@ -1,8 +1,6 @@
  
+const startBtn = document.getElementById('js_startApp')
 let action = 0;
-let printTodos = [];
-
-control();
 
 class Todo {
     constructor(title) {
@@ -13,92 +11,79 @@ class Todo {
 
 class TodoList {
     constructor() {
-        const todos = []
+        this.todos = [],
+        this.printTodos = []
+    }
+
+    logTodos() {
+        this.printTodos = [];
+        for(let i = 1; i <= this.todos.length; i++) {
+            this.printTodos.push(`\n${i}. ${this.todos[i-1].title} which 'done' status is ${this.todos[i-1].done}`);
+        }
+        console.log(`Your todos: ${this.printTodos}`);
     }
 
     addTodo() {
         const newTitle = prompt("Add new todo");
         const newTodo = new Todo(newTitle);
         this.todos.push(newTodo);
-        logTodos();
-        confirm('Add more?') ? addTodo() : start();
+        this.logTodos();
+        confirm('Add more?') ? this.addTodo() : start();
+    }
+
+    deleteTodo() {
+        if(this.todos.length === 0) {
+            alert('Your todolist is empty')
+            start();
+        } else {
+            let deleteIndex = prompt(`Enter the number of the todo you want to delete\n ${this.printTodos}`)
+    
+            if(deleteIndex > 0 && deleteIndex <= this.todos.length) {
+                this.todos.splice(deleteIndex-1, 1);
+                this.logTodos();
+            } else {
+                alert (`Todo item number ${deleteIndex} doesn't exist`)
+            }
+    
+            confirm('Delete more?') ? this.deleteTodo() : start();
+        }
+    }
+
+    editTodo() {
+        let editIndex = prompt(`Enter the number of the todo you want to edit\n ${printTodos}`)-1;
+        this.todos[editIndex] = prompt(`Write the new version of this task"\n${this.todos[editIndex]}`);
+        
+        confirm('Edit more?') ? this.editTodo() : start();
     }
 }
 
-// let cokolwiek = new Todo('Cokolwiek')
-// console.log(cokolwiek)
+const myList = new TodoList;
+startBtn.addEventListener('click', control.bind(myList));
+
+
 
 //------------ control the app
 function control() {
     switch (action) {
         case 0:
-            start();
+            start(myList);
             break;
         case 1:
-            addTodo();
+            myList.addTodo();
             break;
         case 2:
-            deleteTodo();
+            myList.deleteTodo();
             break;
         case 3:
-            editTodo();
+            myList.editTodo();
             break;
     }
 }
 
 // ------------ start panel
-function start() {
-    logTodos()
+function start(list) {
+    list.logTodos()
     action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action\n1 to add a new todo\n2 to delete a todo\n3 to edit a todo'), 10);
-    control();
+    control(myList);
 }
-
-// ------------ log todos
-function logTodos() {
-    printTodos = [];
-    for(let i = 1; i <= todos.length; i++) {
-        printTodos.push(`\n${i}. ${todos[i-1]}`);
-    }
-    console.log(`Your todos: ${printTodos}`);
-}
-
-// ------------ add new todo
-// function addTodo() {
-//     const newTitle = prompt("Add new todo");
-//     const newTodo = new Todo(newTitle);
-//     todos.push(newTodo);
-//     logTodos();
-//     confirm('Add more?') ? addTodo() : start();
-// }
-
-// ------------ delete todo
-function deleteTodo() {
-    if(todos.length === 0) {
-        alert('Your todolist is empty')
-        start();
-    } else {
-        let deleteIndex = prompt(`Enter the number of the todo you want to delete\n ${printTodos}`)
-
-        if(deleteIndex > 0 && deleteIndex <= todos.length) {
-            todos.splice(deleteIndex-1, 1);
-            logTodos();
-        } else {
-            alert (`Todo item number ${deleteIndex} doesn't exist`)
-        }
-
-        confirm('Delete more?') ? deleteTodo() : start();
-    }
-}
-
-// ------------ edit todo
-function editTodo() {
-    let editIndex = prompt(`Enter the number of the todo you want to edit\n ${printTodos}`)-1;
-
-    todos[editIndex] = prompt(`Write the new version of this task"\n${todos[editIndex]}`);
-    
-    confirm('Edit more?') ? editTodo() : start();
-}
-
-
-
 
