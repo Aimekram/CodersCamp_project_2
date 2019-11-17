@@ -21,6 +21,7 @@ class TodoList {
             let status = this.todos[i-1].done ? 'done' : 'to do';
             this.printTodos.push(`\n${i}. ${this.todos[i-1].title}, status: ${status}`);
         }
+        localStorage.setItem('TodoList', JSON.stringify(this.todos));
         console.log(`Your tasks: ${this.printTodos}`);
     }
 
@@ -29,7 +30,7 @@ class TodoList {
         const newTodo = new Todo(newTitle);
         this.todos.push(newTodo);
         this.logTodos();
-        confirm('Add more?') ? this.addTodo() : start();
+        confirm('Add more?') ? this.addTodo() : start(); 
     }
 
     deleteTodo() {
@@ -64,9 +65,7 @@ class TodoList {
 }
 
 const myList = new TodoList;
-startBtn.addEventListener('click', control.bind(myList));
-
-
+startBtn.addEventListener('click', control);
 
 //------------ control the app
 function control() {
@@ -86,6 +85,11 @@ function control() {
         case 4:
             myList.setDone();
             break;
+        default:
+            alert('Wrong input. You need to choose a number from 0 to 4');
+            action = 0;
+            start();
+            break;
     }
 }
 
@@ -94,6 +98,7 @@ function start() {
     console.clear();
     myList.logTodos()
     action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action:\n\n0 to show your todolist in console\n1 to add a new task\n2 to delete a task\n3 to edit a task\n4 to set done status of a given task to true'), 10);
-    control(myList);
+    control();
 }
+
 
