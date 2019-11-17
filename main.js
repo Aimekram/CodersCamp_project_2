@@ -18,9 +18,10 @@ class TodoList {
     logTodos() {
         this.printTodos = [];
         for(let i = 1; i <= this.todos.length; i++) {
-            this.printTodos.push(`\n${i}. ${this.todos[i-1].title} which 'done' status is ${this.todos[i-1].done}`);
+            let status = this.todos[i-1].done ? 'done' : 'to do';
+            this.printTodos.push(`\n${i}. ${this.todos[i-1].title}, status: ${status}`);
         }
-        console.log(`Your todos: ${this.printTodos}`);
+        console.log(`Your tasks: ${this.printTodos}`);
     }
 
     addTodo() {
@@ -71,7 +72,7 @@ startBtn.addEventListener('click', control.bind(myList));
 function control() {
     switch (action) {
         case 0:
-            start(myList);
+            start();
             break;
         case 1:
             myList.addTodo();
@@ -90,8 +91,9 @@ function control() {
 
 // ------------ start panel
 function start() {
+    console.clear();
     myList.logTodos()
-    action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action\n1 to add a new task\n2 to delete a task\n3 to edit a task\n4 to set done status of a given task to true'), 10);
+    action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action:\n\n0 to show your todolist in console\n1 to add a new task\n2 to delete a task\n3 to edit a task\n4 to set done status of a given task to true'), 10);
     control(myList);
 }
 
