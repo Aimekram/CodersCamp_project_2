@@ -85,6 +85,10 @@ function control() {
         case 4:
             myList.setDone();
             break;
+        case 5:
+            console.log('Click the button to start again')
+            action = 0;
+            break;
         default:
             alert('Wrong input. You need to choose a number from 0 to 4');
             action = 0;
@@ -97,7 +101,7 @@ function control() {
 function start() {
     console.clear();
     myList.logTodos()
-    action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action:\n\n0 to show your todolist in console\n1 to add a new task\n2 to delete a task\n3 to edit a task\n4 to set done status of a given task to true'), 10);
+    action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action:\n\n0 to show your todolist in console\n1 to add a new task\n2 to delete a task\n3 to edit a task\n4 to set done status of a given task to true\n5 to quit'), 10);
     control();
 }
 
