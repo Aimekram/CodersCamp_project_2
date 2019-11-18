@@ -35,8 +35,9 @@ class TodoList {
 
     deleteTodo() {
         validate()
-        let index = prompt(`Enter the number of the todo you want to delete\n ${this.printTodos}`);
-        validate(index) ? this.todos.splice(index-1, 1) : resetAction();
+        let index = prompt(`Enter the number of the todo you want to delete\n ${this.printTodos}`)-1;
+        validate(index) ? this.todos.splice(index, 1) : resetAction();
+        this.logTodos();
         conf('delete');
     }
 
@@ -121,11 +122,12 @@ function validate(index) {
         alert('Your todolist is empty');
         start()
     } 
-    if(index <= 0 || index > myList.todos.length) {
-        alert (`Todo item number ${index} doesn't exist`)
-        return false;
-    } else {
+    if(index >= 0 && index < myList.todos.length) {
         return true;
+    // } else if (isNaN(index) === false) {
+    //     alert (`Todo item with this number doesn't exist`)
+    } else {
+        return false;
     }
 }
 
