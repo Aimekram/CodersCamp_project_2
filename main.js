@@ -21,8 +21,8 @@ class TodoList {
             let status = this.todos[i-1].done ? 'done' : 'to do';
             this.printTodos.push(`\n${i}. ${this.todos[i-1].title}, status: ${status}`);
         }
-        localStorage.setItem('TodoList', JSON.stringify(this.todos));
-        console.log(`Your tasks: ${this.printTodos}`);
+        // localStorage.setItem('TodoList', JSON.stringify(this.todos));
+        // console.log(`Your tasks: ${this.printTodos}`);
     }
 
     addTodo() {
@@ -122,13 +122,7 @@ function validate(index) {
         alert('Your todolist is empty');
         start()
     } 
-    if(index >= 0 && index < myList.todos.length) {
-        return true;
-    // } else if (isNaN(index) === false) {
-    //     alert (`Todo item with this number doesn't exist`)
-    } else {
-        return false;
-    }
+    return index >= 0 && index < myList.todos.length
 }
 
 function resetAction() {
