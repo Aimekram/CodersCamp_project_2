@@ -22,7 +22,7 @@ class TodoList {
             this.printTodos.push(`\n${i}. ${this.todos[i-1].title}, status: ${status}`);
         }
         // localStorage.setItem('TodoList', JSON.stringify(this.todos));
-        // console.log(`Your tasks: ${this.printTodos}`);
+        console.log(`Your tasks: ${this.printTodos}`);
     }
 
     addTodo() {
