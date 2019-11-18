@@ -34,30 +34,23 @@ class TodoList {
     }
 
     deleteTodo() {
-        if(this.todos.length === 0) {
-            alert('Your todolist is empty')
-            start();
-        } else {
-            let deleteIndex = prompt(`Enter the number of the todo you want to delete\n ${this.printTodos}`)
-            if(deleteIndex > 0 && deleteIndex <= this.todos.length) {
-                this.todos.splice(deleteIndex-1, 1);
-                this.logTodos();
-            } else {
-                alert (`Todo item number ${deleteIndex} doesn't exist`)
-            }
-            conf('delete');
-        }
+        validate()
+        let index = prompt(`Enter the number of the todo you want to delete\n ${this.printTodos}`);
+        validate(index) ? this.todos.splice(index-1, 1) : resetAction();
+        conf('delete');
     }
 
     editTodo() {
-        let editIndex = prompt(`Enter the number of the todo you want to edit\n ${this.printTodos}`)-1;
-        this.todos[editIndex].title = prompt(`Write the new version of the title of this task\n${this.printTodos[editIndex]}`);
+        validate()
+        let index = prompt(`Enter the number of the todo you want to edit\n ${this.printTodos}`)-1;
+        validate(index) ? this.todos[index].title = prompt(`Write the new version of the title of this task\n${this.printTodos[index]}`) : resetAction();
         conf('edit');
     }
 
     setDone() {
-        let doneIndex = prompt(`Enter the number of the todo you want to change status\n ${this.printTodos}`)-1;
-        this.todos[doneIndex].done = !this.todos[doneIndex].done
+        validate()
+        let index = prompt(`Enter the number of the todo you want to change status\n ${this.printTodos}`)-1;
+        validate(index) ? this.todos[index].done = !this.todos[index].done : resetAction();
         conf('done');
     }
 }
@@ -67,7 +60,11 @@ startBtn.addEventListener('click', control);
 
 //------------ control the app
 function control() {
-    switch (action) {
+    switch (isNaN(action) || parseInt(action)) {
+        case true: 
+            console.log('Click the button to start again');
+            resetAction();
+            break;
         case 0:
             start();
             break;
@@ -83,13 +80,9 @@ function control() {
         case 4:
             myList.setDone();
             break;
-        case 5:
-            console.log('Click the button to start again')
-            action = 0;
-            break;
         default:
             alert('Wrong input. You need to choose a number from 0 to 4');
-            action = 0;
+            resetAction();
             start();
             break;
     }
@@ -99,12 +92,12 @@ function control() {
 function start() {
     console.clear();
     myList.logTodos()
-    action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action:\n\n0 to show your todolist in console\n1 to add a new task\n2 to delete a task\n3 to edit a task\n4 to set done status of a given task to true\n5 to quit'), 10);
+    action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action:\n\n0 to show your todolist in console\n1 to add a new task\n2 to delete a task\n3 to edit a task\n4 to set done status of a given task to true'), 10);
     control();
 }
 
 
-// ------------  confirmations for each action type
+// ------------ confirmations for each action type
 function conf(confType) {
     switch(confType) {
         case 'add':
@@ -114,12 +107,29 @@ function conf(confType) {
             confirm('Delete more?') ? myList.deleteTodo() : start();
             break;
         case 'edit':
-            confirm('Edit more?') ? this.editTodo() : start();
+            confirm('Edit more?') ? myList.editTodo() : start();
             break;
         case 'done':
-            confirm('Mark more todos as done?') ? this.setDone() : start();
+            confirm('Mark more todos as done?') ? myList.setDone() : start();
             break;
     }
 }
 
+// ------------ data validation
+function validate(index) {
+    if(myList.todos.length === 0) {
+        alert('Your todolist is empty');
+        start()
+    } 
+    if(index <= 0 || index > myList.todos.length) {
+        alert (`Todo item number ${index} doesn't exist`)
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function resetAction() {
+    action = 0
+}
 
