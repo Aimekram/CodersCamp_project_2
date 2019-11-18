@@ -30,7 +30,7 @@ class TodoList {
         const newTodo = new Todo(newTitle);
         this.todos.push(newTodo);
         this.logTodos();
-        confirm('Add more?') ? this.addTodo() : start(); 
+        conf('add'); 
     }
 
     deleteTodo() {
@@ -39,28 +39,26 @@ class TodoList {
             start();
         } else {
             let deleteIndex = prompt(`Enter the number of the todo you want to delete\n ${this.printTodos}`)
-    
             if(deleteIndex > 0 && deleteIndex <= this.todos.length) {
                 this.todos.splice(deleteIndex-1, 1);
                 this.logTodos();
             } else {
                 alert (`Todo item number ${deleteIndex} doesn't exist`)
             }
-    
-            confirm('Delete more?') ? this.deleteTodo() : start();
+            conf('delete');
         }
     }
 
     editTodo() {
         let editIndex = prompt(`Enter the number of the todo you want to edit\n ${this.printTodos}`)-1;
-        this.todos[editIndex] = prompt(`Write the new version of this task"\n${this.todos[editIndex]}`);
-        confirm('Edit more?') ? this.editTodo() : start();
+        this.todos[editIndex].title = prompt(`Write the new version of the title of this task\n${this.printTodos[editIndex]}`);
+        conf('edit');
     }
 
     setDone() {
         let doneIndex = prompt(`Enter the number of the todo you want to change status\n ${this.printTodos}`)-1;
         this.todos[doneIndex].done = !this.todos[doneIndex].done
-        confirm('Edit more todos?') ? this.setDone() : start();
+        conf('done');
     }
 }
 
@@ -103,6 +101,25 @@ function start() {
     myList.logTodos()
     action = parseInt(prompt('Hello, you entered a todoapp - write a number to choose action:\n\n0 to show your todolist in console\n1 to add a new task\n2 to delete a task\n3 to edit a task\n4 to set done status of a given task to true\n5 to quit'), 10);
     control();
+}
+
+
+// ------------  confirmations for each action type
+function conf(confType) {
+    switch(confType) {
+        case 'add':
+            confirm('Add more?') ? myList.addTodo() : start(); 
+            break;
+        case 'delete':
+            confirm('Delete more?') ? myList.deleteTodo() : start();
+            break;
+        case 'edit':
+            confirm('Edit more?') ? this.editTodo() : start();
+            break;
+        case 'done':
+            confirm('Mark more todos as done?') ? this.setDone() : start();
+            break;
+    }
 }
 
 
