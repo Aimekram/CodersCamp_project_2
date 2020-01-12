@@ -1,5 +1,5 @@
 # CodersCamp_project_2
-Todo console app
+Todo App in the console
 
 HTML+CSS, but mostly JS
 
